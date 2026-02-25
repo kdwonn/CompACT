@@ -6,11 +6,6 @@
   <title>CompACT: Planning in 8 Tokens</title>
   <meta name="description" content="CompACT: A Compact Discrete Tokenizer for Latent World Model (CVPR 2026)">
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
   <!-- Bulma CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 
@@ -26,60 +21,65 @@
 <!-- Hero / Header -->
 <section class="hero">
   <div class="hero-body">
-    <div class="container is-max-desktop has-text-centered">
+    <div class="container is-max-desktop">
+      <div class="hero-layout">
+        <div class="hero-content">
 
-      <!-- Conference badge -->
-      <p class="mb-3">
-        <span class="tag is-medium is-link is-light">CVPR 2026</span>
-      </p>
+          <!-- Conference badge -->
+          <span class="conference-badge">CVPR 2026</span>
 
-      <!-- Title -->
-      <h1 class="title is-2 publication-title">
-        Planning in 8 Tokens:<br>A Compact Discrete Tokenizer for Latent World Model
-      </h1>
+          <!-- Title -->
+          <h1 class="title is-2 publication-title">
+            Planning in 8 Tokens:<br>A Compact Discrete Tokenizer for Latent World Model
+          </h1>
 
-      <!-- Authors -->
-      <div class="publication-authors">
-        <span class="author-block">
-          <a href="https://kdwonn.github.io" target="_blank">Dongwon Kim</a><sup>1</sup>,
-        </span>
-        <span class="author-block">
-          <a href="https://www.linkedin.com/in/gawon-seo-9a3588279/" target="_blank">Gawon Seo</a><sup>2</sup>,
-        </span>
-        <span class="author-block">
-          <a href="https://jinsingsangsung.github.io/" target="_blank">Jinsung Lee</a><sup>2</sup>,
-        </span>
-        <span class="author-block">
-          <a href="https://cvlab.postech.ac.kr/~mcho/" target="_blank">Minsu Cho</a><sup>2,3</sup>,
-        </span>
-        <span class="author-block">
-          <a href="https://suhakwak.github.io/" target="_blank">Suha Kwak</a><sup>2</sup>
-        </span>
+          <!-- Authors -->
+          <div class="publication-authors">
+            <span class="author-block">
+              <a href="https://kdwonn.github.io" target="_blank">Dongwon Kim</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/gawon-seo-9a3588279/" target="_blank">Gawon Seo</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://jinsingsangsung.github.io/" target="_blank">Jinsung Lee</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://cvlab.postech.ac.kr/~mcho/" target="_blank">Minsu Cho</a><sup>2,3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://suhakwak.github.io/" target="_blank">Suha Kwak</a><sup>2</sup>
+            </span>
+          </div>
+
+          <!-- Affiliations -->
+          <div class="affiliations mt-2">
+            <sup>1</sup>KAIST &nbsp;&nbsp;
+            <sup>2</sup>POSTECH &nbsp;&nbsp;
+            <sup>3</sup>RLWRLD
+          </div>
+
+          <!-- Links -->
+          <div class="publication-links mt-4">
+            <a class="button is-dark is-medium" href="static/main.pdf" target="_blank">
+              <span class="icon"><i class="fas fa-file-pdf"></i></span>
+              <span>Paper</span>
+            </a>
+            <a class="button is-medium" disabled>
+              <span class="icon"><i class="fas fa-book"></i></span>
+              <span>arXiv (soon)</span>
+            </a>
+            <a class="button is-medium" disabled>
+              <span class="icon"><i class="fab fa-github"></i></span>
+              <span>Code (soon)</span>
+            </a>
+          </div>
+
+        </div>
+        <div class="hero-visual">
+          <img src="static/images/8world.png" alt="8 World Globe — Planning in 8 Tokens" class="hero-globe">
+        </div>
       </div>
-
-      <!-- Affiliations -->
-      <div class="affiliations mt-2">
-        <sup>1</sup>KAIST &nbsp;&nbsp;
-        <sup>2</sup>POSTECH &nbsp;&nbsp;
-        <sup>3</sup>RLWRLD
-      </div>
-
-      <!-- Links -->
-      <div class="publication-links mt-4">
-        <a class="button is-rounded is-dark is-medium" href="static/main.pdf" target="_blank">
-          <span class="icon"><i class="fas fa-file-pdf"></i></span>
-          <span>Paper</span>
-        </a>
-        <a class="button is-rounded is-medium" disabled>
-          <span class="icon"><i class="fas fa-book"></i></span>
-          <span>arXiv (soon)</span>
-        </a>
-        <a class="button is-rounded is-medium" disabled>
-          <span class="icon"><i class="fab fa-github"></i></span>
-          <span>Code (soon)</span>
-        </a>
-      </div>
-
     </div>
   </div>
 </section>
@@ -89,7 +89,7 @@
 <!-- Abstract -->
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Abstract</h2>
+    <h2 class="title section-title">Abstract</h2>
     <div class="abstract-content">
       <p>
         World models provide a powerful framework for simulating environment dynamics conditioned on actions or instructions, enabling downstream tasks such as action planning or policy learning.
@@ -104,10 +104,10 @@
 
 <hr class="section-divider">
 
-<!-- 3-Minute Summary -->
+<!-- Summary -->
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered mb-5">Summary</h2>
+    <h2 class="title section-title mb-5">Summary</h2>
 
     <!-- Motivation & Problem -->
     <div class="summary-section">
@@ -141,7 +141,7 @@
           (c) The world model is applied to decision-time planning via sampling-based optimization (e.g., CEM).
         </p>
       </div>
-      <div class="figure-container">
+      <div class="figure-container medium">
         <img src="static/images/fig2.png" alt="CompACT tokenizer architecture detail" loading="lazy">
         <p class="figure-caption">
           <b>Tokenizer architecture detail.</b>
@@ -201,7 +201,7 @@
 <!-- BibTeX -->
 <section class="section bibtex-section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">BibTeX</h2>
+    <h2 class="title section-title">BibTeX</h2>
     <div class="bibtex-block" id="bibtex">
       <button class="copy-button" onclick="copyBibtex()">Copy</button>
 @inproceedings{kim2026compact,
@@ -216,7 +216,7 @@
 <!-- Footer -->
 <footer class="footer">
   <div class="container">
-    <div class="content has-text-centered">
+    <div class="content">
       <p>
         This website template is borrowed from <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
       </p>
