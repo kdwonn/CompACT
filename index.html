@@ -69,9 +69,9 @@
               <span class="icon"><i class="fas fa-book"></i></span>
               <span>arXiv (soon)</span>
             </a>
-            <a class="button is-medium" disabled>
+            <a class="button is-medium" href="https://github.com/kdwonn/CompACT" target="_blank">
               <span class="icon"><i class="fab fa-github"></i></span>
-              <span>Code (soon)</span>
+              <span>Code</span>
             </a>
           </div>
 
@@ -129,7 +129,7 @@
       <h3 class="summary-heading">CompACT Tokenizer Design</h3>
       <p class="summary-text">
         CompACT introduces two key ideas:
-        <b>(1) Semantic encoding</b> via a frozen DINOv2 backbone paired with a latent resampler that distills visual features into a compact set of discrete tokens, preserving planning-critical semantics while discarding low-level reconstruction details.
+        <b>(1) Semantic encoding</b> via a frozen DINOv3 backbone paired with a latent resampler that distills visual features into a compact set of discrete tokens, preserving planning-critical semantics while discarding low-level reconstruction details.
         <b>(2) Generative decoding</b> through an MM-DiT-based decoder that unmasks target VQGAN tokens conditioned on the compact latent tokens, enabling faithful pixel-level reconstruction when needed.
       </p>
       <div class="figure-container">
@@ -145,7 +145,7 @@
         <img src="static/images/fig2.png" alt="CompACT tokenizer architecture detail" loading="lazy">
         <p class="figure-caption">
           <b>Tokenizer architecture detail.</b>
-          During training, only the latent resampler and D<sub>compact</sub> are updated. The frozen DINOv2 encoder provides semantic features, while a pre-trained VQGAN encoder produces masked target tokens for the generative decoder.
+          During training, only the latent resampler and D<sub>compact</sub> are updated. The frozen DINOv3 encoder provides semantic features, while a pre-trained VQGAN encoder produces masked target tokens for the generative decoder.
         </p>
       </div>
     </div>
