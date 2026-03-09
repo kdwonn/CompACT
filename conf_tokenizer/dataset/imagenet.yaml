@@ -1,0 +1,35 @@
+# @package _global_
+dataset:
+  context_size: 1  # Single images for tokenizer training
+  batch_size: 64
+  image_size: 224
+  dinov2_image_size: 224
+  num_workers: 8
+  # WebDataset specific configuration
+  data_root: ${oc.env:DATASET_PREFIX}/imagenet_wds # Root directory for shards
+  train_shards: ${dataset.data_root}/train/imagenet-train-{000000..001281}.tar
+  val_shards: ${dataset.data_root}/val/imagenet-val-{000000..000049}.tar
+  test_shards: ${dataset.data_root}/val/imagenet-val-{000000..000049}.tar
+  
+  # WebDataset settings
+  shuffle_buffer_size: 5000  # Buffer size for shuffling samples
+  shard_shuffle_initial: 1000
+  estimated_train_size: 1281167 # Estimated training dataset size
+  estimated_val_size: 50000      # Estimated validation dataset size  
+  estimated_test_size: 50000     # Estimated test dataset size
+  use_augmentation: true         # Enable data augmentation for training
+  
+  # Image normalization for base tokenizer (overridden by base_tokenizer configs)
+  mean: null
+  std: null
+  
+  # DINOv2 normalization (always ImageNet values)
+  dinov2_mean: [0.485, 0.456, 0.406]
+  dinov2_std: [0.229, 0.224, 0.225]
+  
+  # Enable dual normalization for base tokenizer + DINOv2 (overridden by base_tokenizer configs)
+  use_dual_normalization: null
+  
+  # Use DINOv2-augmented images for compact tokenizer encoder (requires use_dual_normalization)
+  use_dino_image_for_compact: false
+ 

@@ -1,0 +1,3 @@
+# Default scheduler: no scheduler
+scheduler:
+  _target_: null  # No scheduler by default 

@@ -1,0 +1,13 @@
+# @package _global_
+model:
+  tokenizer:
+    compact_tokenizer:
+      diffusion:
+        _target_: diffusion.disc_diffusion.DiscreteDiffusionWithSelfCondition
+        mask_token_id: ${model.tokenizer.base_tokenizer.n_embed}
+        num_timesteps: 16
+        schedule_type: "cosine"
+        temperature: 1.0
+        output_key: "decoder_2d_logits"
+        latent_self_cond_prob: 0.9
+        cfg_prob: 0.1

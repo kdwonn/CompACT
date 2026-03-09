@@ -1,0 +1,8 @@
+# @package _global_
+# Path for setup_tokenizer function to load experiment config and checkpoint
+# Must be manually specified when using this config
+tokenizer_path: ???
+
+dataset:
+  image_size: 224
+  # mean and std will be automatically loaded from tokenizer experiment config

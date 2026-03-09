@@ -1,0 +1,55 @@
+# @package _global_
+model:
+  tokenizer:
+    compact_tokenizer:
+      _target_: token_distill.compact_tokenizer.CompactTokenizer
+      encoder:
+        _target_: token_distill.vit_components.MAEEncoderQFormer
+        in_dim: 768
+        latent_dim: 768
+        num_2d_tokens: ${experiment.n_2d_tokens}
+        mae_model_name: "facebook/vit-mae-base"
+        num_1d_tokens: ${experiment.n_compact_tokens}
+        num_registers: ${experiment.n_registers}
+        final_norm: true
+        out_proj_dim: ${experiment.compact_tokenizer_code_dim}
+        final_norm_context: ${model.tokenizer.compact_tokenizer.repa_on_enc}
+        enable_masking: ${experiment.enable_encoder_masking}
+        masking_prob: 0.9
+        min_masking_ratio: 0.0
+        max_masking_ratio: 0.6
+        num_qformer_layers: 5  # QFormer-specific parameter
+        num_attention_heads: 8  # QFormer-specific parameter
+      decoder:
+        _target_: token_distill.vit_components.DiTDecoder
+        in_dim: 1024
+        latent_dim: 1024
+        target_codebook_size: ${model.tokenizer.base_tokenizer.n_embed}
+        process_attn_depth: ${experiment.process_attn_depth}
+        num_blocks: 16
+        num_2d_tokens: ${experiment.n_2d_tokens}
+        final_norm: false
+        in_proj_dim: ${experiment.compact_tokenizer_code_dim}
+        final_norm_context: true
+        repa_target_block_num: 1
+        num_1d_tokens: ${experiment.n_compact_tokens}
+      quantizer:
+        _target_: token_distill.fsq.FSQWrapper
+        levels:
+        - 8
+        - 8
+        - 8
+        - 5
+        - 5
+        - 5
+        codebook_size: 64000
+      diffusion: {}
+      num_1d_tokens: ${experiment.n_compact_tokens}
+      num_2d_tokens: ${experiment.n_2d_tokens}
+      masking_type: cosine
+      target_codebook_size: ${model.tokenizer.base_tokenizer.n_embed}
+      repa_on_enc: false
+
+dataset:
+  use_dino_image_for_compact: true
+  dinov2_image_size: 224

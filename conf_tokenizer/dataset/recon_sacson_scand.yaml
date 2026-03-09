@@ -1,0 +1,43 @@
+# @package dataset
+
+_target_: datasets.FramePairsWebDatasetDataModule
+
+# Basic settings
+batch_size: 32
+num_workers: 8
+image_size: 224
+
+# Normalization settings
+use_dual_normalization: true
+dinov2_image_size: 224
+use_augmentation: true  # Minimal augmentation for robotics data
+
+# Image normalization for base tokenizer (overridden by base_tokenizer configs)
+mean: null
+std: null
+
+# DINOv2 normalization (ImageNet stats)  
+dinov2_mean: [0.485, 0.456, 0.406]
+dinov2_std: [0.229, 0.224, 0.225]
+
+# WebDataset settings
+shuffle_buffer_size: 5000
+shuffle_initial: 1000
+
+# imagenet_shards: ${oc.env:DATASET_PREFIX}/imagenet_wds/train/imagenet-train-{000000..001281}.tar
+recon_shards: ${oc.env:DATASET_PREFIX}/recon_wds/train/{0000000..0000048}.tar
+sacson_shards: ${oc.env:DATASET_PREFIX}/sacson_wds/train/{0000000..0000018}.tar
+scand_shards: ${oc.env:DATASET_PREFIX}/scand_wds/{0000000..0000008}.tar
+
+# Production shard URLs - combining all datasets for training
+train_shards: ${dataset.recon_shards}::${dataset.sacson_shards}::${dataset.scand_shards}
+val_shards: ${oc.env:DATASET_PREFIX}/recon_wds/test/{0000000..0000004}.tar # lets use first 50K samples following ImageNet val
+test_shards: ${oc.env:DATASET_PREFIX}/recon_wds/test/{0000000..0000004}.tar
+
+val_has_frame_pairs: true
+
+# Estimated sizes for full dataset
+# recon: 480000, sacson: 180000, scand: 80000
+estimated_train_size: 740000  # total training samples
+estimated_val_size: 50000     # 50K validation samples (ImageNet val)
+estimated_test_size: 50000     # 50K test samples (ImageNet val)

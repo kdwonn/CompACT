@@ -1,0 +1,55 @@
+# @package _global_
+model:
+  tokenizer:
+    compact_tokenizer:
+      _target_: token_distill.compact_tokenizer.CompactTokenizer
+      encoder:
+        _target_: token_distill.vit_components.ViTEncoder
+        in_dim: 384
+        latent_dim: 384
+        num_2d_tokens: ${experiment.n_2d_tokens}
+        patch_size: 16
+        process_attn_depth: ${experiment.process_attn_depth}
+        num_blocks: 12
+        num_1d_tokens: ${experiment.n_compact_tokens}
+        num_registers: ${experiment.n_registers}
+        final_norm: true
+        out_proj_dim: ${experiment.compact_tokenizer_code_dim}
+        final_norm_context: ${model.tokenizer.compact_tokenizer.repa_on_enc}
+        update_with_cold_latent: true
+        use_slot_write_attn: false
+        enable_masking: ${experiment.enable_encoder_masking}
+        masking_prob: 0.9
+        min_masking_ratio: 0.0
+        max_masking_ratio: 0.6
+        enable_freq_cutoff: ${experiment.cutoff_enable}
+        cutoff_downsample_factor: ${experiment.cutoff_downsample_factor}
+        cutoff_prob: ${experiment.cutoff_prob}
+      decoder:
+        _target_: token_distill.vit_components.ViTDecoder
+        in_dim: 384
+        latent_dim: 384
+        target_codebook_size: ${model.tokenizer.base_tokenizer.n_embed}
+        process_attn_depth: ${experiment.process_attn_depth}
+        num_blocks: 12
+        num_2d_tokens: ${experiment.n_2d_tokens}
+        final_norm: false
+        in_proj_dim: ${experiment.compact_tokenizer_code_dim}
+        final_norm_context: true
+        repa_target_block_num: 1
+        num_1d_tokens: ${experiment.n_compact_tokens}
+      quantizer:
+        _target_: token_distill.fsq.FSQWrapper
+        levels:
+        - 8
+        - 8
+        - 8
+        - 6
+        - 5
+        codebook_size: 15360
+      diffusion: {}
+      num_1d_tokens: ${experiment.n_compact_tokens}
+      num_2d_tokens: ${experiment.n_2d_tokens}
+      masking_type: cosine
+      target_codebook_size: ${model.tokenizer.base_tokenizer.n_embed}
+      repa_on_enc: true

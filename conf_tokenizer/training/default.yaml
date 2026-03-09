@@ -1,0 +1,48 @@
+notes: null  # Natural language description of what this run is for
+run_name: ${now:%Y%m%d_%H%M%S}_${training.notes}
+results_dir: logs/tokenizer_training
+grad_clip_val: 1.0
+accumulate_grad_batches: 1
+
+# Checkpoint
+from_checkpoint: null  # Path to checkpoint for resuming training
+
+# Loss weights
+recon_loss_weight: 1.0
+commit_loss_weight: 0.25
+rep_guidance_loss_weight: 1.0
+
+wandb_project: "token-distill"
+
+# Image logging configuration
+log_images_locally: true  # Enable local filesystem image logging
+local_image_log_dir: null  # Directory for local image logs (default: {results_dir}/images)
+
+# Model summary configuration
+model_summary_depth: 3  # -1 for all layers, 1,2,3... for specific depth levels
+
+# Logging configuration
+log_metrics_every_n_steps: 50  # Log step-level metrics every N steps to reduce DDP sync overhead
+
+# Profiler configuration
+profiler:
+  enabled: false  # Enable/disable profiler
+  type: pytorch  # Profiler type (currently only 'pytorch' supported)
+  record_module_names: true
+  file_name: "debug"
+  export_to_chrome: true
+  sort_by_key: "cpu_time"
+  row_limit: 100
+  schedule:
+    wait: 10
+    warmup: 20
+    active: 10
+    repeat: 2
+  profile_memory: true
+  with_stack: true
+
+optimizer:
+  _target_: torch.optim.AdamW
+  lr: 1e-4
+  weight_decay: 0.001
+  betas: [0.9, 0.999]

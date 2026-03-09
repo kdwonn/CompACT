@@ -1,0 +1,50 @@
+# Configuration for tokenizer training
+
+defaults:
+  - _self_
+  - dataset: imagenet
+  - model/base_tokenizer: mage
+  - model/compact_tokenizer: dinov3-b_mmdit-l_code2exp16_qformer
+  - model/diffusion: discrete
+  - model/rep_guidance: dinov3_dec
+  - training: default
+  - scheduler: cosine_plateau
+
+# General settings
+seed: 42
+max_steps: 500000  # Training duration in steps instead of epochs
+log_every: 500
+eval_every: 100000
+bfloat16: true
+
+# Device configuration
+devices: auto  # Can be "auto", int (e.g., 1), or list (e.g., [0,1,2,3])
+
+hydra:
+  run:
+    dir: ${training.results_dir}/${training.run_name}
+  sweep:
+    dir: ${training.results_dir}/${training.run_name}
+    subdir: ${hydra.job.num}
+
+experiment:
+  n_compact_tokens: 16
+  n_2d_tokens: 256
+  compact_tokenizer_dim: 512
+  compact_tokenizer_code_dim: 6
+  compact_tokenizer_num_blocks: 8
+  process_attn_depth: 3
+  n_registers: 0
+  enable_encoder_masking: false
+  # High-frequency cutoff augmentation settings
+  cutoff_enable: false  # Enable high-frequency cutoff augmentation
+  cutoff_prob: 0.5  # Probability of applying high-frequency cutoff during training (0.0-1.0)
+  cutoff_downsample_factor: 2  # Factor for downsampling during high-frequency cutoff
+  
+model:
+  tokenizer:
+    _target_: token_distill.token_distill_model.TokenDistillModel
+    codebook_size: ${model.tokenizer.compact_tokenizer.quantizer.codebook_size}
+    num_tokens: ${experiment.n_compact_tokens}
+    normalize_mean: ${dataset.mean}
+    normalize_std: ${dataset.std}

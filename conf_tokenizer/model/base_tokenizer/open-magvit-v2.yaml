@@ -1,0 +1,41 @@
+# @package _global_
+model:
+  tokenizer:
+    base_tokenizer:
+      _target_: token_distill.open_magvitv2.lfqgan.OpenMagvitV2
+      encoder:
+        _target_: token_distill.open_magvitv2.enc_dec.Encoder
+        ch: 128
+        out_ch: 3
+        in_channels: 3
+        num_res_blocks: 4
+        z_channels: 14
+        ch_mult: [1,1,2,2,4]
+        resolution: 256
+        double_z: false
+      decoder:
+        _target_: token_distill.open_magvitv2.enc_dec.Decoder
+        ch: 128
+        out_ch: 3
+        in_channels: 3
+        num_res_blocks: 4
+        z_channels: 14
+        ch_mult: [1,1,2,2,4]
+        resolution: 256
+        double_z: false
+      lfq:
+        _target_: token_distill.open_magvitv2.lfq.LFQ
+        dim: 14
+        codebook_size: 16384
+        sample_minimization_weight: 1.0
+        batch_maximization_weight: 1.0
+      n_embed: 16384
+      embed_dim: 14
+      ckpt_path: ${oc.env:BASE_TOKENIZER_CKPT}/open_magvitv2/pretrain256_16384_ema.ckpt
+
+dataset:
+  # Image normalization for OpenMagvitV2 base tokenizer
+  mean: [0.5, 0.5, 0.5]
+  std: [0.5, 0.5, 0.5]
+  use_dual_normalization: true
+  base_tokenizer_name: open-magvit-v2

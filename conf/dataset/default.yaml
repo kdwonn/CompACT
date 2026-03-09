@@ -1,0 +1,37 @@
+# Dataset configuration
+image_size: 224
+context_size: 4
+normalize: True
+
+# Distance bounds for predictions
+distance:
+  min_dist_cat: -64
+  max_dist_cat: 64
+
+# Action output parameters
+len_traj_pred: 64
+
+action_stats:
+  min: [-2.5, -4] # [min_dx, min_dy]
+  max: [5, 4] # [max_dx, max_dy]
+
+# Datasets
+datasets:
+  recon:
+    data_folder: ${oc.env:DATASET_PREFIX}/nwm/recon
+    train: data_splits/recon/train/
+    test: data_splits/recon/test/
+    goals_per_obs: 4
+    metric_waypoint_spacing: 0.25 # average spacing between waypoints (meters)
+  sacson:
+    data_folder: ${oc.env:DATASET_PREFIX}/nwm/sacson
+    train: data_splits/sacson/train
+    test: data_splits/sacson/test
+    goals_per_obs: 4
+    metric_waypoint_spacing: 0.255
+  scand:
+    data_folder: ${oc.env:DATASET_PREFIX}/nwm/scand
+    train: data_splits/scand/train
+    test: data_splits/scand/test
+    goals_per_obs: 4 
+    metric_waypoint_spacing: 0.38

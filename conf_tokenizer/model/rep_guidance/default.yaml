@@ -1,0 +1,5 @@
+# Rep Guidance Loss Configuration
+_target_: token_distill.rep_guidance.RepGuidanceLoss
+in_dim: ${model.tokenizer.compact_tokenizer.encoder.latent_dim}  # Input dimension from compact tokenizer
+repa_target_enc: "dinov2_vitb14"  # DINOv2 target encoder model
+use_mask: true  # Whether to use masks for loss computation

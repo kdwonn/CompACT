@@ -1,0 +1,22 @@
+# Training configuration
+notes: "nwm_cdit_default"
+run_name: ${now:%Y%m%d_%H%M%S}_${training.notes}
+results_dir: logs/nwm_training
+batch_size: 32
+num_workers: 8
+grad_clip_val: 2.0
+
+# Checkpoint
+from_checkpoint: null  # Path to checkpoint for resuming training
+
+# Optimizer
+optimizer:
+  _target_: torch.optim.AdamW
+  lr: 1e-4
+  weight_decay: 0.01
+
+# WandB Logging
+wandb_enabled: true
+wandb_project: "nwm-training"
+wandb_notes: ${training.run_name}
+wandb_tags: [] 

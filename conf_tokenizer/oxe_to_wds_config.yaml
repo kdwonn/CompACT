@@ -1,0 +1,67 @@
+# Configuration for TFDS to WebDataset conversion
+
+# Default settings
+defaults:
+  - _self_
+
+# Basic configuration
+dataset_name: all  # Override with command line: dataset_name=<name>
+num_workers: 8
+output_dir: ${oc.env:DATASET_PREFIX}/oxe_frame_pair/${dataset_name}
+split: train
+time_interval: "2/3"  # seconds between frame pairs
+pairs_per_second: 3.0  # how many frame pairs to sample per second
+shard_size: 12000      # samples per shard
+webp_quality: 100      # WebP compression quality (0-100)
+default_fps: 15.0     # default FPS if not specified per dataset
+
+# Dataset-specific FPS mappings
+# Fill these values manually based on your external source
+dataset_fps:
+  # Manipulation datasets  											
+  fractal20220817_data: 3
+  nyu_door_opening_surprising_effectiveness: 3
+  bc_z: 10
+  eth_agent_affordances: 66.6
+  cmu_stretch: 10
+  berkeley_gnm_recon: 3
+  berkeley_gnm_cory_hall: 5
+  berkeley_gnm_sac_son: 10
+  conq_hose_manipulation: 30
+  dobbe: 30 # the spreadsheet says its 3.75 but I think its wrong
+  aloha_mobile: 50
+  bridge: 5
+  kuka: 10
+  language_table: 10
+  maniskill_dataset_converted_externally_to_rlds: 20
+  robo_net: 1
+  robo_set: 5
+
+data_root: ${oc.env:DATASET_PREFIX}/oxe # Root directory for shards
+# Dataset paths (if using local datasets instead of TFDS hub)
+# Format: gs://gresearch/robotics/<dataset_name>/<version>/
+dataset_path:
+  fractal20220817_data: ${data_root}/fractal20220817_data/0.1.0
+  bridge: ${data_root}/bridge/0.1.0
+  kuka: ${data_root}/kuka/0.1.0
+  language_table: ${data_root}/language_table/0.1.0
+  maniskill_dataset_converted_externally_to_rlds: ${data_root}/maniskill_dataset_converted_externally_to_rlds/0.1.0
+  robo_net: ${data_root}/robo_net/0.1.0
+  robo_set: ${data_root}/robo_set/0.1.0
+  nyu_door_opening_surprising_effectiveness: ${data_root}/nyu_door_opening_surprising_effectiveness/0.1.0
+  bc_z: ${data_root}/bc_z/0.1.0
+  eth_agent_affordances: ${data_root}/eth_agent_affordances/0.1.0
+  cmu_stretch: ${data_root}/cmu_stretch/0.1.0
+  berkeley_gnm_recon: ${data_root}/berkeley_gnm_recon/0.1.0
+  berkeley_gnm_cory_hall: ${data_root}/berkeley_gnm_cory_hall/0.1.0
+  berkeley_gnm_sac_son: ${data_root}/berkeley_gnm_sac_son/0.1.0
+  conq_hose_manipulation: ${data_root}/conq_hose_manipulation/0.0.1
+  dobbe: ${data_root}/dobbe/0.0.1
+  aloha_mobile: ${data_root}/aloha_mobile/0.0.1
+
+# Hydra job configuration
+hydra:
+  job:
+    chdir: false  # Don't change working directory
+  run:
+    dir: logs/oxe_to_wds  # Keep logs in current directory

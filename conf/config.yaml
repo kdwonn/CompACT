@@ -1,0 +1,33 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - dataset: default
+  - model/generator: cdit_b_disc
+  - model/tokenizer: compacttok
+  - model/diffusion: discrete_history
+  - training: default
+  - scheduler: default
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog
+
+hydra:
+  run:
+    dir: ${training.results_dir}/${training.run_name}
+  sweep:
+    dir: ${training.results_dir}/${training.run_name}
+    subdir: ${hydra.job.num}
+  job:
+    chdir: true
+
+# General settings
+seed: 0
+epochs: 100
+log_every: 100
+ckpt_every: 10000
+eval_every: 5000
+bfloat16: 1
+torch_compile: 0
+
+# Resume from existing experiment directory (optional)
+resume_from_dir: null 

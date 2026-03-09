@@ -1,0 +1,7 @@
+_target_: diffusion.disc_diffusion.DiscreteDiffusionWithCFG
+mask_token_id: ${model.tokenizer.codebook_size}
+num_timesteps: 8
+schedule_type: "cosine"
+temperature: 1.0
+cfg_prob: 0.1
+condition_key: "y"

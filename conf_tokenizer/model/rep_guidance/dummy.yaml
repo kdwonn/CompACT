@@ -1,0 +1,4 @@
+# @package _global_
+model:
+  rep_guidance:
+    _target_: token_distill.rep_guidance.DummyRepGuidanceLoss

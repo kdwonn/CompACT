@@ -1,0 +1,34 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - dataset: imagenet_val
+  - model/tokenizer: sdvae
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog
+
+hydra:
+  run:
+    dir: logs/rfid_measure/${run_name}
+  sweep:
+    dir: logs/rfid_measure/${run_name}
+    subdir: ${hydra.job.num}
+  job:
+    chdir: true
+
+# General settings
+seed: 0
+epochs: 100
+log_every: 100
+ckpt_every: 10000
+eval_every: 5000
+bfloat16: 1
+torch_compile: 0
+run_name: rfid_measurement
+
+# Tokenizer configuration
+tokenizer_path: null  # Path to pre-trained tokenizer checkpoint directory (optional)
+
+# Model configuration placeholder (will be overridden by defaults)
+model:
+  tokenizer: null

@@ -1,0 +1,36 @@
+# ImageNet validation dataset configuration for reconstruction FID measurement
+
+# Data loader settings
+batch_size: 32
+num_workers: 4
+shuffle_buffer_size: 5000
+shuffle_initial: 1000
+
+# Image preprocessing
+image_size: 256
+use_augmentation: False
+
+# Normalization parameters - will be overridden by tokenizer config if available
+mean: [0.5, 0.5, 0.5]
+std: [0.5, 0.5, 0.5]
+
+# Dual normalization for DinoV2 (optional)
+use_dual_normalization: False
+dinov2_mean: [0.485, 0.456, 0.406]
+dinov2_std: [0.229, 0.224, 0.225]
+
+data_root: ${oc.env:DATASET_PREFIX}/imagenet_wds # Root directory for shards
+train_shards: null
+val_shards: ${dataset.data_root}/val/imagenet-val-{000000..000049}.tar
+test_shards: null
+
+# Dataset sizes (approximate)
+estimated_train_size: 0
+estimated_val_size: 50000  # ImageNet validation set size
+estimated_test_size: 0
+
+# Keys to extract from dataset
+keys_to_keep: ["image", "cls", "__key__"]
+
+# For compatibility with NWM dataset config
+context_size: 1

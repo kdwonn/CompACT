@@ -1,0 +1,30 @@
+# @package _global_
+# Debug dataset configuration for tokenizer training
+# Uses a single image repeated across all batches for debugging
+dataset:
+  context_size: 1  # Single images for tokenizer training
+  batch_size: 128    # Smaller batch size for debugging
+  image_size: 224 
+  dinov2_image_size: 196
+  num_workers: 0    # No multiprocessing for debug dataset
+  
+  # Debug dataset specific configuration
+  use_debug_dataset: true
+  debug_image_path: ${oc.env:BASE_TOKENIZER_CKPT}/sloth_test.jpeg  # Path to debug image
+  
+  # Image normalization for base tokenizer
+  mean: null
+  std: null
+  
+  # DINOv2 normalization (always ImageNet values)
+  dinov2_mean: [0.485, 0.456, 0.406]
+  dinov2_std: [0.229, 0.224, 0.225]
+  
+  # Enable dual normalization for base tokenizer + DINOv2
+  use_dual_normalization: null
+  
+  # Use DINOv2-augmented images for compact tokenizer encoder (requires use_dual_normalization)
+  use_dino_image_for_compact: false
+  
+  # Disable augmentation for consistent debugging
+  use_augmentation: false

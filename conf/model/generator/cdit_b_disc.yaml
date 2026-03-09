@@ -1,0 +1,8 @@
+_target_: disc_models.DiscreteCDiT
+input_size: ${model.tokenizer.num_tokens}
+codebook_size: ${model.tokenizer.codebook_size}
+context_size: 2
+hidden_size: 768
+depth: 12
+num_heads: 12
+use_action_cfg: ${model.diffusion.cfg_prob}

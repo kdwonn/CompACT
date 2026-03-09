@@ -1,0 +1,9 @@
+# @package _global_
+# Rep Guidance Loss Configuration for DINOv3
+model:
+  rep_guidance:
+    _target_: token_distill.rep_guidance.RepGuidanceLoss
+    in_dim: ${model.tokenizer.compact_tokenizer.decoder.latent_dim}  # Input dimension from compact tokenizer
+    repa_target_enc: "dinov3_vitb16"  # DINOv3 target encoder model (options: dinov3_vits16, dinov3_vitb16, dinov3_vitl16, dinov3_vit7b16, etc.)
+    dinov3_weights_path: ${oc.env:BASE_TOKENIZER_CKPT}/dinov3/dinov3_vitb16_pretrain_lvd1689m-73cec8be.pth  # Path to DINOv3 weights directory
+    use_mask: false  # Whether to use masks for loss computation

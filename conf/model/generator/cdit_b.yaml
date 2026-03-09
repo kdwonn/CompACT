@@ -1,0 +1,4 @@
+# CDiT-B/2 model configuration
+_target_: models.CDiT_B_2
+input_size: ${divide:${dataset.image_size},8}
+in_channels: 4

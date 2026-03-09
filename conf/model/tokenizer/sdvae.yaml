@@ -1,0 +1,12 @@
+# @package _global_
+model:
+  tokenizer:
+    _target_: tokenizer_wrapper.VAEWrapper
+    model_path: stabilityai/sd-vae-ft-ema
+    normalize_mean: [0.5, 0.5, 0.5]
+    normalize_std: [0.5, 0.5, 0.5]
+
+dataset:
+  image_size: 224
+  mean: [0.5, 0.5, 0.5]
+  std: [0.5, 0.5, 0.5]

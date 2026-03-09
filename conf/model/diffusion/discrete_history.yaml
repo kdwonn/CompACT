@@ -1,0 +1,10 @@
+_target_: diffusion.disc_diffusion.DiscreteDiffusionWithHistoryMasking
+mask_token_id: ${model.tokenizer.codebook_size}
+num_timesteps: 8
+schedule_type: "linear"
+temperature: 1.0
+history_key: "x_cond"
+history_sample_t: 0.8
+cfg_prob: 0
+cfg_scale: 2.0
+without_history_masking: false

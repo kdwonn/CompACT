@@ -1,0 +1,51 @@
+# @package _global_
+model:
+  tokenizer:
+    base_tokenizer:
+      _target_: token_distill.mage_vqgan.vqgan.VQModel
+      encoder:
+        _target_: token_distill.mage_vqgan.model.Encoder
+        ch: 128
+        out_ch: 3
+        ch_mult:
+        - 1
+        - 1
+        - 2
+        - 2
+        - 4
+        num_res_blocks: 2
+        attn_resolutions:
+        - 16
+        dropout: 0.0
+        in_channels: 3
+        resolution: 256
+        z_channels: 256
+        double_z: false
+      decoder:
+        _target_: token_distill.mage_vqgan.model.Decoder
+        ch: 128
+        out_ch: 3
+        ch_mult:
+        - 1
+        - 1
+        - 2
+        - 2
+        - 4
+        num_res_blocks: 2
+        attn_resolutions:
+        - 16
+        dropout: 0.0
+        in_channels: 3
+        resolution: 256
+        z_channels: 256
+        double_z: false
+      n_embed: 1024
+      embed_dim: 256
+      ckpt_path: ${oc.env:BASE_TOKENIZER_CKPT}/mage_vqgan/vqgan_jax_strongaug.ckpt
+
+dataset:
+  # Image normalization for MAGE base tokenizer
+  mean: [0, 0, 0]
+  std: [1, 1, 1]
+  use_dual_normalization: true
+  base_tokenizer_name: mage

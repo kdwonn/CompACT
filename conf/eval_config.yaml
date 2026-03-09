@@ -1,0 +1,27 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog
+
+hydra:
+  run:
+    dir: ${exp_dir}/eval_${now:%Y-%m-%d_%H-%M-%S}
+  sweep:
+    dir: ${exp_dir}/eval_${now:%Y-%m-%d_%H-%M-%S}
+    subdir: ${hydra.job.num}
+  job:
+    chdir: true
+
+# Evaluation settings
+batch_size: 64
+eval_types: "time,rollout"  # Comma-separated evaluation types: time, rollout, rollout_video
+gt_dir: null                # Directory containing ground truth data
+exp_dir: null               # Directory for the experiment output
+num_sec_eval: 5             # Number of seconds for evaluation intervals
+datasets_to_eval: null              # Comma-separated list of dataset names
+
+# Video settings
+input_fps: 4                # Input frames per second
+rollout_fps_values: "1,4"   # Comma-separated list of fps values for rollout evaluation 

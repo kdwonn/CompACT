@@ -1,0 +1,34 @@
+# Debug configuration for robotics dataset
+dataset:
+  context_size: 1  # Frame pairs
+  batch_size: 4    # Small batch for debugging
+  image_size: 224  # Images are already 224x224
+  dinov2_image_size: 224
+  num_workers: 2   # Reduced for debugging
+  
+  # WebDataset robotics configuration
+  # Replace these paths with your actual webdataset shard paths
+  data_root: ${oc.env:DATASET_PREFIX}/oxe_frame_pair  # Change this to your actual path
+  dataset_name:  nyu_door_opening_surprising_effectiveness
+  train_shards: ${dataset.data_root}/${dataset.dataset_name}/${dataset.dataset_name}_{000000..000007}.tar  # Robotics webdataset shards
+  val_shards: ${dataset.data_root}/${dataset.dataset_name}/${dataset.dataset_name}_{000000..000121}.tar    # Use same for debugging
+  test_shards: ${dataset.data_root}/${dataset.dataset_name}/${dataset.dataset_name}_{000000..000121}.tar   # Use same for debugging
+  
+  # WebDataset settings
+  shuffle_buffer_size: 100   # Small buffer for debugging
+  shuffle_initial: 50
+  estimated_train_size: 1000  # Small size for debugging
+  estimated_val_size: 100
+  estimated_test_size: 100
+  use_augmentation: false     # No augmentation for debugging
+  
+  # Image normalization - standard values for robotics
+  mean: [0, 0, 0]       # Standard normalization
+  std: [1, 1, 1]
+  
+  # DINOv2 normalization (ImageNet values)
+  dinov2_mean: [0.485, 0.456, 0.406]
+  dinov2_std: [0.229, 0.224, 0.225]
+  
+  # Enable dual normalization for frame_0 (tokenizer + DINOv2), single for frame_1
+  use_dual_normalization: true

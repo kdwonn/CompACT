@@ -1,0 +1,65 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog
+
+hydra:
+  run:
+    dir: ${output_dir}/planning_${datasets_to_eval}_step${opt_steps}
+  sweep:
+    dir: ${output_dir}/planning_${datasets_to_eval}_step${opt_steps}
+    subdir: ${hydra.job.num}
+  job:
+    chdir: true
+
+# Base configuration
+exp_dir: null                      # Experiment config file path
+ckp: "0100000"                 # Checkpoint ID to use
+datasets_to_eval: [recon,scand]                 # Comma-separated list of dataset names
+output_dir: ${exp_dir}/planning_${ckp}            # Output directory for saving results
+save_preds: false              # Whether to save prediction tensors
+num_workers: 12                 # Number of workers for data loading
+batch_size: 1                 # Batch size for planning evaluation
+
+# Planning specific settings
+num_samples: 80                # Number of sampled trajectories
+rollout_stride: 1              # Rollout stride
+topk: 5                        # Top-k samples to take mean and var for CEM
+opt_steps: 1                  # Number of optimization steps for CEM
+num_repeat_eval: 3             # Number of evaluations per action
+plot: false                    # Whether to create plots
+cost_fn: lpips                  # Cost function to use
+compute_cost_with_recon: true
+
+# Trajectory evaluation settings
+trajectory_eval_distance:
+  min_dist_cat: 8
+  max_dist_cat: 8
+trajectory_eval_len_traj_pred: 8
+trajectory_eval_context_size: 4
+traj_stride: 8
+eval_context_size: 4 
+
+
+# Planning hyperparams
+action_stats:
+  min: [-2.5, -4] # [min_dx, min_dy]
+  max: [5, 4] # [max_dx, max_dy]
+
+plan_datasets_hyperparams:
+  recon:
+    mu: [-0.1, 0, 0]
+    var_scale: [0.02, 0.1, 0.1]
+  scand:
+    mu: [-0.25, 0, 0]
+    var_scale: [0.04, 0.1, 0.1]
+  tartan_drive:
+    mu: [0.5, 0, 0]
+    var_scale: [0.07, 0.1, 0.1]
+  go_stanford:
+    metric_waypoint_spacing: 0.12
+  sacson:
+    mu: [-0.33, 0, 0]
+    var_scale: [0.03, 0.1, 0.1]
